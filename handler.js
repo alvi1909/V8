@@ -424,13 +424,13 @@ module.exports = {
           if (!('sDemote' in chat)) chat.sDemote = ''
           if (!('descUpdate' in chat)) chat.descUpdate = true
           if (!('delete' in chat)) chat.delete = false
-          if (!('antiBadword' in chat)) chat.antiBadword = true
+          if (!('antiBadword' in chat)) chat.antiBadword = false
           if (!('rpg' in chat)) chat.delete = true
-          if (!('nsfw' in chat)) chat.delete = true
+          if (!('nsfw' in chat)) chat.delete = false
           if (!('antiLink' in chat)) chat.antiLink = false
-          if (!('viewonce' in chat)) chat.viewonce = true
+          if (!('viewonce' in chat)) chat.viewonce = false
           if (!('simi' in chat)) chat.sPromote = false
-          if (!('nsfw' in chat)) chat.nsfw = true
+          if (!('nsfw' in chat)) chat.nsfw = false
         } else global.db.data.chats[m.chat] = {
           isBanned: false,
           welcome: false,
@@ -442,10 +442,10 @@ module.exports = {
           descUpdate: true,
           delete: false,
           rpg: true,
-          nsfw: true,
-          antiBadword: true,
+          nsfw: false,
+          antiBadword: false,
           antiLink: false,
-          viewonce: true,
+          viewonce: false,
           simi: false,
         }
         
@@ -454,23 +454,23 @@ module.exports = {
         if (settings) {
           if (!'anon' in settings) settings.anon = true
           if (!'anticall' in settings) settings.anticall = true
-          if (!'antispam' in settings) settings.antispam = true
+          if (!'antispam' in settings) settings.antispam = false
           if (!'antitroli' in settings) settings.antitroli = true
           if (!'backup' in settings) settings.backup = true
           if (!isNumber(settings.backupDB)) settings.backupDB = 0
           if (!'groupOnly' in settings) settings.groupOnly = false
-          if (!'jadibot' in settings) settings.groupOnly = false
+          if (!'jadibot' in settings) settings.groupOnly = true
           if (!'nsfw' in settings) settings.nsfw = true
           if (!isNumber(settings.status)) settings.status = 0
         } else global.db.data.settings[this.user.jid] = {
           anon: true,
           anticall: true,
-          antispam: true,
+          antispam: false,
           antitroli: false,
           backup: true,
           backupDB: 0,
           groupOnly: false,
-          jadibot: false,
+          jadibot: true,
           nsfw: true,
           onsfw: true,
           status: 0,
@@ -745,27 +745,11 @@ module.exports = {
 
               let lea = await (await fetch(fla + `GOOD BYE`)).buffer()
 
-await conn.sendMessage(jid, { "contentText": action === 'add' ? '──────────[ *WELCOME* ]──────────' : '──────────[ *GOOD BYE* ]──────────' , "footerText": text,
-"buttons": [
-{buttonId: '.menu', buttonText: {displayText: '⋮☰ Menu'}, type: 1},
-{buttonId: '.infogc', buttonText: {displayText: 'Info Group'}, type: 1},
-{buttonId: '.rules', buttonText: {displayText: 'Rules Bot'}, type: 1}
-],
-"headerType": "DOCUMENT", "documentMessage": {
-            "url": "https://mmg.whatsapp.net/d/f/AsO5KpESy9E0WI72xEVp65rx505bQxvuIma79L8Ue076.enc",
-            "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "title": "ness.docx",
-            "fileSha256": "8Xfe3NQDhjwVjR54tkkShLDGrIFKR9QT5EsthPyxDCI=",
-            "fileLength": "99999999999999",
-            "pageCount": 100,
-            "mediaKey": "XWv4hcnpGY51qEVSO9+e+q6LYqPR3DbtT4iqS9yKhkI=",
-            "fileName": 'Creαted by : ℓettα - sαmα ♡',
-            "fileEncSha256": "NI9ykWUcXKquea4BmH7GgzhMb3pAeqqwE+MTFbH/Wk8=",
-            "directPath": "/v/t62.7118-24/35150115_287008086621545_8250021012380583765_n.enc?ccb=11-4&oh=6f0f730e5224c054969c276a6276a920&oe=61A21F46",
-            "mediaKeyTimestamp": "1634472176",
-            "jpegThumbnail": await (await fetch('https://telegra.ph/file/6e45318d7c76f57e4a8bd.jpg')).buffer(),
-  }}, 'buttonsMessage', { quoted: false, contextInfo: { mentionedJid: [user], forwardingScore: 999, isForwarded: true, externalAdReply: { title: global.wm, body: action === 'add' ? 'Selamat Datang Kak!' : 'Yahh.. kok keluar :‹', description: action === 'add' ? 'Selamat Datang Kak!' : 'Yahh.. kok keluar :‹', mediaType: 2, thumbnail: action === 'add' ? wel : lea, mediaUrl: `https://youtube.com/watch?v=uIedYGN3NQQ`}}})
-              
+              conn.send2ButtonLoc(jid, action === 'add' ? wel : lea, text, action === 'add' ? '*WELCOME TO GROUP ✨*' : '*DADA IKAN 💀*', '⋮☰ Menu', '#menu', 'Info Grup', '.infogc', false, {
+                contextInfo: {
+                  mentionedJid: [user]
+                }
+              })
             }
           }
         }
@@ -776,7 +760,7 @@ await conn.sendMessage(jid, { "contentText": action === 'add' ? '─────
         if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
         text = text.replace('@user', '@' + participants[0].split('@')[0])
         let banp = fs.readFileSync('./src/kanna.jpg')
-        if (chat.detect) this.send2ButtonLoc(jid, banp, text, '🎮 Ƙαnnα вσт', 'MENU', '#menu', 'OWNER', '#owner', null, {
+        if (chat.detect) this.send2ButtonLoc(jid, banp, text, 'ZeusBotz', 'MENU', '#menu', 'OWNER', '#owner', null, {
           contextInfo: {
             mentionedJid: this.parseMention(text)
           }
@@ -795,7 +779,7 @@ await conn.sendMessage(jid, { "contentText": action === 'add' ? '─────
 *◇ Number*: ${require('awesome-phonenumber')(`+${m.participant.split`@`[0]}`).getNumber('international')}
 
 klick untuk mematikannya atau ketik #disable delete
-`.trim(), '🎮 Ƙαnnα вσт', 'DISABLE DELETE', '.disable delete', {
+`.trim(), 'ZeusBotz', 'DISABLE DELETE', '.disable delete', {
       quoted: m.message,
       contextInfo: {
         mentionedJid: [m.participant]
